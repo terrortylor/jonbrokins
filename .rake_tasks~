@@ -1,0 +1,9 @@
+build
+clean
+clobber
+gem:build
+gem:install
+install
+install:local
+release[remote]
+spec
