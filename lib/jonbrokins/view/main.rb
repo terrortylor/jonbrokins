@@ -4,7 +4,7 @@ require 'curses'
 module Jonbrokins
   module View
     class Main < Window
-      def initialize(main_height, y_offset)
+      def initialize(height, y_offset)
         super
         @selected_index = 0
       end
