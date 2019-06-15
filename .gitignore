@@ -14,3 +14,4 @@ Gemfile.lock
 .rakeTasks
 jonbrokins-*.gem
 config.yml
+.rake_tasks~
