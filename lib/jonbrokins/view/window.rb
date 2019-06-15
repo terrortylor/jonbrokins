@@ -4,7 +4,10 @@ module Jonbrokins
   module View
     class Window
       def initialize(height, y_offset)
-        @window = Curses::Window.new(height, 0, y_offset, 0)
+        @height = height
+        @y_offset = y_offset
+        @closed = false
+        @window = Curses::Window.new(@height, 0, @y_offset, 0)
         set_padding
       end
 
@@ -15,12 +18,18 @@ module Jonbrokins
 
       def draw
         @window << "NOT IMPLEMENTED".center(Curses.cols)
-        # @window.addstr("NOT IMPLEMENTED".center(Curses.cols))
         @window.refresh
       end
 
       def method_missing(m, *args)
         @window.send(m, *args)
+      end
+
+      def close
+        @closed = true
+        @window.clear
+        @window.refresh
+        @window.close
       end
     end
   end

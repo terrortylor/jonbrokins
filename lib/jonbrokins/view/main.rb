@@ -18,8 +18,10 @@ module Jonbrokins
             @selected_index = @selected_index >= max_index ? max_index : @selected_index + 1
           when 'k'
             @selected_index = @selected_index <= 0 ? 0 : @selected_index - 1
-          when Curses::Key::ENTER then exit 0
-          when 'q' then exit 0
+          when '13' # 13 is caridge return
+            load_next_view
+        when 'q' then close
+        when '3' then exit 0 # 3 is ctrl-c
         end
       end
 
@@ -29,6 +31,10 @@ module Jonbrokins
         @window << "What is the user doing?"
         # refresh curses output
         @window.refresh
+      end
+
+      def load_next_view
+        #Not Implemented
       end
     end
   end

@@ -13,7 +13,6 @@ module Jonbrokins
     config = Jonbrokins::Config.new.config
     abort "Could not load configuration file: " if config.nil?
 
-
     @tui = Jonbrokins::TUI.new
     @tui.draw
     # config['jenkins_targets'].each do |name, config|

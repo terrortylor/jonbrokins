@@ -6,7 +6,7 @@ module Jonbrokins
     class Footer < Window
       def initialize(height, y_offset)
         super
-        @window.color_set(Jonbrokins::TUI::COLOUR_HEADER)
+        @window.color_set(Jonbrokins::TUI::COLOUR_HEADER_FOOTER_BAR)
       end
 
       def draw

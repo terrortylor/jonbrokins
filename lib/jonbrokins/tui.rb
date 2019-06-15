@@ -6,9 +6,10 @@ require 'curses'
 module Jonbrokins
   class TUI
     # Colour scheme mappings
-    COLOUR_HEADER = 1
-    COLOUR_LIST_ITEM = 2
-    COLOUR_SELECTED_LIST_ITEM = 3
+    COLOUR_HEADER_FOOTER_BAR = 1
+    COLOUR_HEADER = 2
+    COLOUR_LIST_ITEM = 3
+    COLOUR_SELECTED_LIST_ITEM = 4
 
     def initialize
       Curses.noecho
@@ -42,8 +43,9 @@ module Jonbrokins
     private
 
     def init_colour_pairs
-      Curses.init_pair(COLOUR_HEADER, Curses::COLOR_BLACK, Curses::COLOR_RED)
-      Curses.init_pair(COLOUR_LIST_ITEM, Curses::COLOR_GREEN, Curses::COLOR_BLACK)
+      Curses.init_pair(COLOUR_HEADER_FOOTER_BAR, Curses::COLOR_BLACK, Curses::COLOR_RED)
+      Curses.init_pair(COLOUR_HEADER, Curses::COLOR_GREEN, Curses::COLOR_BLACK)
+      Curses.init_pair(COLOUR_LIST_ITEM, Curses::COLOR_WHITE, Curses::COLOR_BLACK)
       Curses.init_pair(COLOUR_SELECTED_LIST_ITEM, Curses::COLOR_RED, Curses::COLOR_BLACK)
     end
   end
