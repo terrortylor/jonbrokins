@@ -1,14 +1,10 @@
-require "jonbrokins/footer"
-require "jonbrokins/header"
-require "jonbrokins/main"
+require "jonbrokins/view/footer"
+require "jonbrokins/view/header"
+require "jonbrokins/view/select_instance"
 require 'curses'
 
 module Jonbrokins
   class TUI
-    # Padding options
-    TOP_PAD = 1
-    LEFT_PAD = 2
-
     # Colour scheme mappings
     COLOUR_HEADER = 1
     COLOUR_LIST_ITEM = 2
@@ -31,11 +27,11 @@ module Jonbrokins
     def draw
       init_colour_pairs
       begin
-        @header = Jonbrokins::Header.new(@header_footer_height)
+        @header = Jonbrokins::View::Header.new(@header_footer_height, 0)
         @header.draw
-        @footer = Jonbrokins::Footer.new(@header_footer_height, @main_height + @header_footer_height)
+        @footer = Jonbrokins::View::Footer.new(@header_footer_height, @main_height + @header_footer_height)
         @footer.draw
-        @main = Jonbrokins::Main.new(@main_height, @header_footer_height)
+        @main = Jonbrokins::View::SelectInstance.new(@main_height, @header_footer_height)
         @main.draw
       ensure
         # sleep 1
