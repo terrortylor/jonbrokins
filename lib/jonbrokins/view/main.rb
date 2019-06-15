@@ -9,22 +9,6 @@ module Jonbrokins
         @selected_index = 0
       end
 
-      def handle_user_input(max_index)
-        # Capture user input
-        str = @window.getch.to_s
-        #Update selection value or exit loop
-        case str
-          when 'j'
-            @selected_index = @selected_index >= max_index ? max_index : @selected_index + 1
-          when 'k'
-            @selected_index = @selected_index <= 0 ? 0 : @selected_index - 1
-          when '13' # 13 is caridge return
-            load_next_view
-        when 'q' then close
-        when '3' then exit 0 # 3 is ctrl-c
-        end
-      end
-
       def draw
         # Set position and show instruction
         @window.setpos(@top_pad, @left_pad)

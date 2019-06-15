@@ -8,15 +8,31 @@ module Jonbrokins
         super(height, y_offset)
         @menu_title = menu_title
         set_options
+        @selected_index = 0
       end
 
       def set_options
         @options = {}
       end
+      
+      def handle_user_input(max_index)
+        # Capture user input
+        str = @window.getch.to_s
+        #Update selection value or exit loop
+        case str
+          when 'j'
+            @selected_index = @selected_index >= max_index ? max_index : @selected_index + 1
+          when 'k'
+            @selected_index = @selected_index <= 0 ? 0 : @selected_index - 1
+          when '13' # 13 is caridge return
+            load_next_view
+        when 'q' then close
+        when '3' then exit 0 # 3 is ctrl-c
+        end
+      end
 
       def draw
         # Set selected item
-        selected_index = 0
         #Begin loop to wait for user selection
         while not @closed
           @window.box(?|, ?-)
