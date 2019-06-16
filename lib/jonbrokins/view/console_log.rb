@@ -7,7 +7,7 @@ require 'curses'
 module Jonbrokins
   module View
     class ConsoleLog < Main
-      def initialize(height, y_offset, controller, model)
+      def initialize(height, y_offset, jenkins_instance)
         super
         set_text
         @window.scrollok(true)
@@ -15,6 +15,7 @@ module Jonbrokins
         # taking into account first item is 0
         @y_max = @window.maxy - ((2 * @top_pad) + 1)
         @x_max_console_length = @window.maxx - ((2 * @left_pad) + 1)
+        @jenkins_instance = jenkins_instance
       end
 
       def debug_status

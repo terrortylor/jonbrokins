@@ -11,9 +11,7 @@ module Jonbrokins
     COLOUR_LIST_ITEM = 3
     COLOUR_SELECTED_LIST_ITEM = 4
 
-    def initialize(controller, model)
-      @controller = controller
-      @model = model
+    def initialize()
       Curses.noecho
       Curses.nonl
       Curses.stdscr.keypad(true)
@@ -34,7 +32,7 @@ module Jonbrokins
         @header.draw
         @footer = Jonbrokins::View::Footer.new(@header_footer_height, @main_height + @header_footer_height)
         @footer.draw
-        @main = Jonbrokins::View::SelectInstance.new(@main_height, @header_footer_height, @controller, @model)
+        @main = Jonbrokins::View::SelectInstance.new(@main_height, @header_footer_height)
         @main.draw
       ensure
         # sleep 1

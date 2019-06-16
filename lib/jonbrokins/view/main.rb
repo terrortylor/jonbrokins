@@ -4,10 +4,8 @@ require 'curses'
 module Jonbrokins
   module View
     class Main < Window
-      def initialize(height, y_offset, controller, model)
+      def initialize(height, y_offset)
         super(height, y_offset)
-        @controller = controller
-        @model = model
       end
 
       def draw

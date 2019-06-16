@@ -1,25 +1,30 @@
 require "jonbrokins/view/main"
+require "jonbrokins/data/instance_summary_data"
 require 'curses'
 
 module Jonbrokins
   module View
     class InstanceSummary < Main
-      def initialize(height, y_offset, controller, model)
-        super
+      include InstanceSummaryData
+
+      def initialize(height, y_offset, jenkins_instance)
+        @window_title = "Jonbrokins Instance Job Summary: #{jenkins_instance}"
+        @jenkins_instance = jenkins_instance
         set_summary
-        @window_title = "Jonbrokins Instance Job Summary:"
+        super(height, y_offset)
       end
 
       def set_summary
-        @summary = {
-          "Success" => 0,
-          "Failed" => 0,
-          "InProgress" => 0,
-          "Unstable" => 0,
-          "Disabled" => 0,
-          "Aborted" => 0,
-          "NotBuilt" => 0
-        }
+        # @summary = {
+        #   "Success" => 0,
+        #   "Failed" => 0,
+        #   "InProgress" => 0,
+        #   "Unstable" => 0,
+        #   "Disabled" => 0,
+        #   "Aborted" => 0,
+        #   "NotBuilt" => 0
+        # }
+        @summary = InstanceSummaryData.get_jenkins_instance_summary @jenkins_instance
       end
 
       def handle_user_input()
