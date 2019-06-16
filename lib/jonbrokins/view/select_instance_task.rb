@@ -1,5 +1,6 @@
 require "jonbrokins/view/menu"
 require "jonbrokins/view/select_job"
+require "jonbrokins/view/instance_summary"
 require 'curses'
 
 module Jonbrokins
@@ -19,9 +20,10 @@ module Jonbrokins
       def load_next_view
         case @selected_index
           when 0
-            # Not Implemented
+            instance_summary = Jonbrokins::View::InstanceSummary.new(@height, @y_offset)
+            instance_summary.draw
           when 1
-            list_jobs =Jonbrokins::View::SelectJob.new(@height, @y_offset)
+            list_jobs = Jonbrokins::View::SelectJob.new(@height, @y_offset)
             list_jobs.draw
         end
       end

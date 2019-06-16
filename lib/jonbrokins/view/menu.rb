@@ -26,8 +26,8 @@ module Jonbrokins
             @selected_index = @selected_index <= 0 ? 0 : @selected_index - 1
           when ' '
             load_next_view
-        when 'q' then close
-        when '3' then exit 0 # 3 is ctrl-c
+          when 'q' then close
+          when '3' then exit 0 # 3 is ctrl-c
         end
       end
 
