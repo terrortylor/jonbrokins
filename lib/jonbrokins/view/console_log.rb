@@ -12,7 +12,14 @@ module Jonbrokins
         set_text
         @window.scrollok(true)
         # set maximum number of y lines, leaving buffer at top and bottom
-        @y_max = @window.maxy - (2 * @top_pad)
+        # taking into account first item is 0
+        @y_max = @window.maxy - ((2 * @top_pad) + 1)
+        @x_max_console_length = @window.maxx - ((2 * @left_pad) + 1)
+      end
+
+      def debug_status
+        @window.setpos(0, @left_pad)
+        @window << "wind x: #{@window.maxx}/#{@x_max_console_length} : wind y: #{@window.maxy}/#{@y_max} : top_pad: #{@top_pad} : left_pad: #{@left_pad} : y_offset: #{@y_offset} : top: #{@top}"
       end
 
       # Load the file into memory and
@@ -25,9 +32,9 @@ module Jonbrokins
         @top = 0
         @data_lines[0..@y_max].each_with_index do |line, idx|
           @window.setpos(@top_pad + idx, @left_pad)
-          @window.addstr(line)
+          @window.addstr(line[0..@x_max_console_length])
         end
-        @window.setpos(0, @left_pad)
+        # debug_status
         @window.refresh
         handle_user_input
       end
@@ -37,13 +44,14 @@ module Jonbrokins
         if @top > 0
           @window.scrl(-1)
           @top -= 1
-          str = @data_lines[@top+1]
-          if str
+          line = @data_lines[@top]
+          if line
             @window.setpos(@top_pad, @left_pad)
-            @window.addstr(str)
+            @window.addstr(line[0..@x_max_console_length])
           end
           @window.setpos(@window.maxy-1, 0)
-          @window.addstr("".ljust(@window.maxx-1))
+          @window.addstr("".ljust(@window.maxx - 1))
+          # debug_status
           return true
         else
           return false
@@ -52,16 +60,17 @@ module Jonbrokins
 
       # Scroll the display down by one line.
       def scroll_down
-        if @top + @y_max < @data_lines.length
+        if @top + @y_max + 1< @data_lines.length
           @window.scrl(1)
           @top += 1
-          str = @data_lines[@top + @y_max]
-          if str
-            @window.setpos(@y_max, @left_pad)
-            @window.addstr(str)
+          line = @data_lines[@top + @y_max]
+          if line
+            @window.setpos(@y_max + 1, @left_pad)
+            @window.addstr(line[0..@x_max_console_length])
           end
           @window.setpos(0, @left_pad)
-          @window.addstr("".ljust(@window.maxx))
+          @window.addstr("".ljust(@window.maxx - 1))
+          # debug_status
           return true
         else
           return false
@@ -69,18 +78,16 @@ module Jonbrokins
       end
 
       # Allow the user to interact with the display.
-      # This uses Emacs-like keybindings, and also
-      # vi-like keybindings as well, except that left
-      # and right move to the beginning and end of the
-      # file, respectively.
+      # This uses vi-like keybindings.
+      # Space to select.
       def handle_user_input
         while not @closed
           result = true
           str = @window.getch.to_s
           case str
-            when Curses::KEY_DOWN, "j"
+            when "j"
               result = scroll_down
-            when Curses::KEY_UP, "k"
+            when "k"
               result = scroll_up
             when "f"
               (@y_max).times do |i|
@@ -96,10 +103,10 @@ module Jonbrokins
                   break
                 end
               end
-            when Curses::KEY_LEFT, "h"
+            when "h"
               while scroll_up
               end
-            when Curses::KEY_RIGHT, "l"
+            when "l"
               while scroll_down
               end
             when 'q' then close
@@ -109,8 +116,7 @@ module Jonbrokins
       end
 
         def set_text
-          @text = """
-1  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at tellus in arcu
+          @text = """1  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at tellus in arcu
 2  posuere vehicula. Suspendisse potenti. Pellentesque at lacus massa. Suspendisse
 3  accumsan pretium purus sit amet malesuada. Aenean ut augue scelerisque, auctor
 4  libero vel, ultricies lectus. Nam a felis vitae leo aliquet accumsan non sed
@@ -197,8 +203,7 @@ module Jonbrokins
 85  Suspendisse imperdiet quam lectus, sed hendrerit felis tincidunt at. Sed pulvinar,
 86  eros quis malesuada ullamcorper, lacus arcu porta turpis, sit amet aliquet velit
 87  dolor non nunc. Praesent ullamcorper est in turpis imperdiet, non rhoncus
-88  augue efficitur.
-          """
+88  augue efficitur."""
         end
     end
   end
