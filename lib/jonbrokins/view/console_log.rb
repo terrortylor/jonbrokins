@@ -7,7 +7,7 @@ require 'curses'
 module Jonbrokins
   module View
     class ConsoleLog < Main
-      def initialize(height, y_offset)
+      def initialize(height, y_offset, controller, model)
         super
         set_text
         @window.scrollok(true)

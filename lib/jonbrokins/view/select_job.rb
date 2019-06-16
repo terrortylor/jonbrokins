@@ -5,8 +5,9 @@ require 'curses'
 module Jonbrokins
   module View
     class SelectJob < Menu
-      def initialize(height, y_offset)
-        super(height, y_offset, "Select Jonbrokins Job:")
+      def initialize(height, y_offset, controller, model)
+        super(height, y_offset, controller, model)
+        @menu_title =  "Select Jonbrokins Job:"
       end
 
       def set_options
@@ -18,7 +19,7 @@ module Jonbrokins
       end
 
       def load_next_view
-        console_log = Jonbrokins::View::ConsoleLog.new(@height, @y_offset)
+        console_log = Jonbrokins::View::ConsoleLog.new(@height, @y_offset, @controller, @model)
         console_log.draw
       end
     end

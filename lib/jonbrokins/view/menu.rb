@@ -4,9 +4,8 @@ require 'curses'
 module Jonbrokins
   module View
     class Menu < Main
-      def initialize(height, y_offset, menu_title)
-        super(height, y_offset)
-        @menu_title = menu_title
+      def initialize(height, y_offset, controller, model)
+        super
         set_options
         @selected_index = 0
       end

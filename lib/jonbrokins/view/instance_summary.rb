@@ -4,7 +4,7 @@ require 'curses'
 module Jonbrokins
   module View
     class InstanceSummary < Main
-      def initialize(height, y_offset)
+      def initialize(height, y_offset, controller, model)
         super
         set_summary
         @window_title = "Jonbrokins Instance Job Summary:"

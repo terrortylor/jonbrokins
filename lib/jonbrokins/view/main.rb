@@ -4,9 +4,10 @@ require 'curses'
 module Jonbrokins
   module View
     class Main < Window
-      def initialize(height, y_offset)
-        super
-        @selected_index = 0
+      def initialize(height, y_offset, controller, model)
+        super(height, y_offset)
+        @controller = controller
+        @model = model
       end
 
       def draw
