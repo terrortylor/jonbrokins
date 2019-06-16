@@ -30,21 +30,20 @@ module Jonbrokins
         @window.setpos(0, @left_pad)
         @window.refresh
         handle_user_input
-        # sleep 3
-      # rescue
-      #   raise "cannot open file for reading"
       end
 
       # Scroll the display up by one line.
       def scroll_up
-        if @top >= 0
+        if @top > 0
           @window.scrl(-1)
           @top -= 1
-          str = @data_lines[@top]
+          str = @data_lines[@top+1]
           if str
             @window.setpos(@top_pad, @left_pad)
             @window.addstr(str)
           end
+          @window.setpos(@window.maxy-1, 0)
+          @window.addstr("".ljust(@window.maxx-1))
           return true
         else
           return false
@@ -53,14 +52,16 @@ module Jonbrokins
 
       # Scroll the display down by one line.
       def scroll_down
-        if @top + @y_max <= @data_lines.length
+        if @top + @y_max < @data_lines.length
           @window.scrl(1)
           @top += 1
           str = @data_lines[@top + @y_max]
           if str
-            @window.setpos(@y_max - (1), @left_pad)
+            @window.setpos(@y_max, @left_pad)
             @window.addstr(str)
           end
+          @window.setpos(0, @left_pad)
+          @window.addstr("".ljust(@window.maxx))
           return true
         else
           return false
