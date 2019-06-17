@@ -15,15 +15,6 @@ module Jonbrokins
       end
 
       def set_summary
-        # @summary = {
-        #   "Success" => 0,
-        #   "Failed" => 0,
-        #   "InProgress" => 0,
-        #   "Unstable" => 0,
-        #   "Disabled" => 0,
-        #   "Aborted" => 0,
-        #   "NotBuilt" => 0
-        # }
         @summary = InstanceSummaryData.get_jenkins_instance_summary @jenkins_instance
       end
 

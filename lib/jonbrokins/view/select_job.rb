@@ -19,7 +19,7 @@ module Jonbrokins
       end
 
       def load_next_view
-        console_log = Jonbrokins::View::ConsoleLog.new(@height, @y_offset, @jenkins_instance)
+        console_log = Jonbrokins::View::ConsoleLog.new(@height, @y_offset, @jenkins_instance, @options[@selected_index])
         console_log.draw
       end
     end
